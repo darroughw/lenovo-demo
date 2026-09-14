@@ -29,3 +29,28 @@ export interface Task {
 export type ApiResponse<T> =
   | { success: true; data: T }
   | { success: false; error: string };
+
+export type FindingSeverity = "info" | "warning" | "critical";
+
+export type FindingReviewStatus = "pending" | "accepted" | "dismissed";
+
+export interface Finding {
+  id: string;
+  summary: string;
+  detail: string;
+  severity: FindingSeverity;
+  confidence: number;
+  suggestedAction: string;
+  createdAt: number;
+  reviewStatus: FindingReviewStatus;
+}
+
+export type AgentHistoryStatus = "completed" | "error" | "needs-review";
+
+export interface AgentHistoryEntry {
+  id: string;
+  prompt: string;
+  status: AgentHistoryStatus;
+  confidence?: number;
+  completedAt: number;
+}

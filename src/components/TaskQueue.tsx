@@ -6,6 +6,7 @@ import type { Task, TaskStatus } from "@/src/types/agent";
 interface TaskQueueProps {
   tasks: Task[];
   onAddTask: (prompt: string) => void;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 const STATUS_LABEL: Record<TaskStatus["status"], string> = {
@@ -18,7 +19,7 @@ const STATUS_LABEL: Record<TaskStatus["status"], string> = {
 
 const STATUS_BADGE_CLASS: Record<TaskStatus["status"], string> = {
   queued: "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400",
-  running: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+  running: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
   completed:
     "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
   error: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
@@ -26,7 +27,7 @@ const STATUS_BADGE_CLASS: Record<TaskStatus["status"], string> = {
     "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
 };
 
-export function TaskQueue({ tasks, onAddTask }: TaskQueueProps) {
+export function TaskQueue({ tasks, onAddTask, ref }: TaskQueueProps) {
   const [prompt, setPrompt] = useState("");
   const [confirmation, setConfirmation] = useState("");
 
@@ -46,17 +47,26 @@ export function TaskQueue({ tasks, onAddTask }: TaskQueueProps) {
       </h3>
 
       <form onSubmit={handleSubmit} className="flex gap-2">
-        <input
-          type="text"
-          value={prompt}
-          onChange={(event) => setPrompt(event.target.value)}
-          aria-label="New task prompt"
-          placeholder="Describe a task for the agent..."
-          className="flex-1 rounded-md border border-zinc-300 px-3 py-1.5 text-sm dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50"
-        />
+        <div className="relative flex-1">
+          <input
+            ref={ref}
+            type="text"
+            value={prompt}
+            onChange={(event) => setPrompt(event.target.value)}
+            aria-label="New task prompt"
+            placeholder="Describe a task for the agent..."
+            className="w-full rounded-md border border-zinc-300 px-3 py-1.5 pr-12 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50"
+          />
+          <kbd
+            aria-hidden="true"
+            className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 rounded border border-zinc-300 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400 sm:block dark:border-zinc-700 dark:text-zinc-500"
+          >
+            ⌘K
+          </kbd>
+        </div>
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white"
+          className="rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900"
         >
           Queue
         </button>
@@ -67,7 +77,9 @@ export function TaskQueue({ tasks, onAddTask }: TaskQueueProps) {
 
       <ul className="flex flex-col gap-2">
         {tasks.length === 0 && (
-          <li className="text-sm text-zinc-400">No tasks queued yet.</li>
+          <li className="text-sm text-zinc-500 dark:text-zinc-400">
+            No tasks queued yet.
+          </li>
         )}
         {tasks.map((task) => (
           <li

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "xIQ Agent Platform Dashboard",
+  title: "Fleet Ops Agent Console",
   description: "AI agent dashboard with streaming output, confidence signals, and a task queue.",
 };
 

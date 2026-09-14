@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fleet Ops Agent Console
 
-## Getting Started
+An AI agent dashboard for an IT fleet-management use case: active agents with live status,
+token-by-token streaming output, confidence signals with historical trend, an always-on
+anomaly monitor with human-reviewed recommendations, and a task queue.
 
-First, run the development server:
+Built by [Darrough West](https://darroughw.github.io) as a portfolio piece exploring
+AI-native UX patterns — streaming, confidence signaling, human-in-the-loop review, and
+accessible custom components — on a modern Next.js/React stack.
+
+## Features
+
+- **Live agents** — status badges (running / queued / needs-review / error) with a
+  real-time progress bar polled from a Route Handler
+- **Streaming output** — token-by-token SSE from a `ReadableStream`, with start/stop/reset
+  controls and an accessible `aria-live` log
+- **Confidence signals** — a point-in-time bar plus a Recharts sparkline showing confidence
+  trend across recent runs
+- **Fleet Monitor** — an always-on agent (not task-scoped) that streams anomaly findings via
+  SSE and requires an explicit Accept or Dismiss per finding; it never acts on its own
+- **Agent detail panel** — a native `<dialog>` showing an agent's full task history
+- **Task queue** — form-driven task submission with `useReducer`-based state
+- **Keyboard shortcuts** — Cmd/Ctrl+K focuses the task input, Escape cancels streaming
+- **Dark mode** — every component follows `prefers-color-scheme`
+- **Accessibility-first** — ARIA roles/labels, visible focus states, and AA-contrast color
+  choices throughout; see the Storybook a11y addon for live checks per component
+
+## Stack
+
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript (strict) · Tailwind CSS ·
+Recharts · Storybook
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Other scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run storybook  # component explorer at :6006, with an accessibility addon panel
+npm run test        # runs every *.stories.tsx as a headless-browser Vitest test
+npm run build       # production build
+npm run lint        # ESLint
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` — Next.js App Router pages and Route Handlers (SSE streaming, progress polling,
+  monitor findings)
+- `src/components/` — UI components, each paired with a `.stories.tsx`
+- `src/hooks/` — data-fetching and state hooks (`useAgentStream`, `useMonitorFeed`,
+  `useTaskQueue`, …)
+- `src/lib/` — canned demo data (streaming samples, findings pool, task/confidence history)
+- `src/types/` — shared TypeScript types, built around discriminated unions for agent/task
+  status

@@ -19,7 +19,7 @@ const STATUS_LABEL: Record<AgentStatus["status"], string> = {
 
 const STATUS_BADGE_CLASS: Record<AgentStatus["status"], string> = {
   idle: "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300",
-  running: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+  running: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
   error: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
   "needs-review":
     "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
@@ -40,11 +40,11 @@ export function AgentCard({ agent, selected, onSelect }: AgentCardProps) {
     <button
       type="button"
       aria-pressed={selected}
-      aria-label={`${agent.name}, status: ${statusLabel}`}
+      aria-label={`${agent.name}, status: ${statusLabel}${isRunning ? `, ${liveProgress}% complete` : ""}`}
       onClick={() => onSelect(agent.id)}
-      className={`flex w-full flex-col gap-2 rounded-lg border p-4 text-left transition-colors ${
+      className={`flex w-full flex-col gap-2 rounded-lg border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black ${
         selected
-          ? "border-blue-500 bg-blue-50 dark:bg-blue-950/40"
+          ? "border-teal-600 bg-teal-50 dark:bg-teal-950/40"
           : "border-zinc-200 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
       }`}
     >
@@ -62,15 +62,18 @@ export function AgentCard({ agent, selected, onSelect }: AgentCardProps) {
         {agent.description}
       </p>
       {isRunning && (
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+        <div
+          aria-hidden="true"
+          className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800"
+        >
           <div
-            className="h-full rounded-full bg-blue-500 transition-all"
+            className="h-full rounded-full bg-teal-600 transition-all"
             style={{ width: `${liveProgress}%` }}
           />
         </div>
       )}
       {agentStatus.status === "queued" && (
-        <span className="text-xs text-zinc-400">
+        <span className="text-xs text-zinc-500 dark:text-zinc-400">
           Position {agentStatus.position} in queue
         </span>
       )}
