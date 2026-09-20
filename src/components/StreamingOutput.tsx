@@ -23,9 +23,9 @@ export function StreamingOutput({ agentId, autoStart, ref }: StreamingOutputProp
   useImperativeHandle(ref, () => ({ stop }), [stop]);
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="flex flex-col gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+        <h3 className="text-sm font-medium text-ink dark:text-cream">
           Agent Output
         </h3>
         <div className="flex gap-2">
@@ -33,7 +33,7 @@ export function StreamingOutput({ agentId, autoStart, ref }: StreamingOutputProp
             type="button"
             onClick={start}
             disabled={isStreaming}
-            className="rounded-md bg-teal-700 px-3 py-1 text-xs font-medium text-white hover:bg-teal-800 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900"
+            className="rounded-sm bg-ink px-3 py-1 text-xs font-medium text-cream hover:opacity-90 disabled:opacity-40 dark:bg-cream dark:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
           >
             Start
           </button>
@@ -41,14 +41,14 @@ export function StreamingOutput({ agentId, autoStart, ref }: StreamingOutputProp
             type="button"
             onClick={stop}
             disabled={!isStreaming}
-            className="rounded-md bg-zinc-200 px-3 py-1 text-xs font-medium text-zinc-700 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:bg-zinc-800 dark:text-zinc-200 dark:focus-visible:ring-offset-zinc-900"
+            className="rounded-sm bg-stone-200 px-3 py-1 text-xs font-medium text-stone-700 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:bg-stone-800 dark:text-stone-200 dark:focus-visible:ring-offset-stone-900"
           >
             Stop
           </button>
           <button
             type="button"
             onClick={reset}
-            className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-300 dark:focus-visible:ring-offset-zinc-900"
+            className="rounded-sm border border-stone-300 px-3 py-1 text-xs font-medium text-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-stone-700 dark:text-stone-300 dark:focus-visible:ring-offset-stone-900"
           >
             Reset
           </button>
@@ -57,7 +57,7 @@ export function StreamingOutput({ agentId, autoStart, ref }: StreamingOutputProp
       <div
         role="log"
         aria-live="polite"
-        className="min-h-24 whitespace-pre-wrap rounded-md bg-zinc-50 p-3 font-mono text-sm text-zinc-700 dark:bg-black dark:text-zinc-300"
+        className="min-h-24 whitespace-pre-wrap rounded-sm bg-cream p-3 font-mono text-sm text-stone-700 dark:bg-ink dark:text-stone-300"
       >
         {tokens.join(" ")}
         {isStreaming && (

@@ -11,8 +11,8 @@ function nextDelay(): number {
 }
 
 // Findings arrive on a randomized delay rather than a fixed interval — the
-// monitor reacts whenever simulated fleet data changes, it isn't polling on
-// a schedule.
+// monitor reacts whenever simulated portfolio data changes, it isn't polling
+// on a schedule.
 export async function GET(request: NextRequest) {
   const encoder = new TextEncoder();
   let findingCounter = 0;

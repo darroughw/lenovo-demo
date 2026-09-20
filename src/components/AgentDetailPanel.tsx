@@ -58,7 +58,7 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
     <dialog
       ref={dialogRef}
       aria-labelledby="agent-detail-heading"
-      className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-lg border border-zinc-200 bg-white p-0 text-zinc-900 backdrop:bg-zinc-900/40 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:backdrop:bg-black/60"
+      className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-sm border border-stone-200 bg-white p-0 text-ink backdrop:bg-stone-900/40 dark:border-stone-800 dark:bg-stone-900 dark:text-cream dark:backdrop:bg-black/60"
     >
       {agent && (
         <div className="flex flex-col gap-4 p-5">
@@ -67,7 +67,7 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
               <h2 id="agent-detail-heading" className="text-base font-semibold">
                 {agent.name}
               </h2>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              <p className="text-sm text-stone-500 dark:text-stone-400">
                 {agent.description}
               </p>
             </div>
@@ -75,7 +75,7 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
               type="button"
               onClick={() => dialogRef.current?.close()}
               aria-label="Close agent history"
-              className="shrink-0 rounded-md p-1 text-zinc-500 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 dark:text-zinc-400 dark:hover:bg-zinc-800"
+              className="shrink-0 rounded-sm p-1 text-stone-500 hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-stone-400 dark:hover:bg-stone-800"
             >
               ✕
             </button>
@@ -84,7 +84,7 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
           <div className="flex flex-col gap-2">
             <h3 className="text-sm font-medium">Task history</h3>
             {sortedHistory.length === 0 ? (
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              <p className="text-sm text-stone-500 dark:text-stone-400">
                 No task history yet for this agent.
               </p>
             ) : (
@@ -92,10 +92,10 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
                 {sortedHistory.map((entry) => (
                   <li
                     key={entry.id}
-                    className="flex flex-col gap-1 rounded-md border border-zinc-100 p-3 dark:border-zinc-800"
+                    className="flex flex-col gap-1 rounded-sm border border-stone-100 p-3 dark:border-stone-800"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <span className="text-sm text-zinc-700 dark:text-zinc-300">
+                      <span className="text-sm text-stone-700 dark:text-stone-300">
                         {entry.prompt}
                       </span>
                       <span
@@ -104,7 +104,7 @@ export function AgentDetailPanel({ agent, history, onClose }: AgentDetailPanelPr
                         {STATUS_LABEL[entry.status]}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
                       <span>{formatRelativeTime(entry.completedAt)}</span>
                       {entry.confidence != null && (
                         <span>{entry.confidence}% confidence</span>

@@ -10,7 +10,7 @@ const SEVERITY_LABEL: Record<FindingSeverity, string> = {
 };
 
 const SEVERITY_BADGE_CLASS: Record<FindingSeverity, string> = {
-  info: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
+  info: "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
   warning: "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
   critical: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
 };
@@ -19,37 +19,37 @@ export function MonitorPanel() {
   const { findings, isWatching, reviewFinding } = useMonitorFeed();
 
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="flex flex-col gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex items-center gap-2">
         <span
           aria-hidden="true"
           className={`h-2 w-2 shrink-0 rounded-full ${
             isWatching
-              ? "animate-pulse bg-teal-500 motion-reduce:animate-none"
-              : "bg-zinc-300 dark:bg-zinc-700"
+              ? "animate-pulse bg-violet-500 motion-reduce:animate-none"
+              : "bg-stone-300 dark:bg-stone-700"
           }`}
         />
-        <span className="text-xs text-zinc-500 dark:text-zinc-400">
+        <span className="text-xs text-stone-500 dark:text-stone-400">
           {isWatching
-            ? "Watching fleet data for anomalies"
-            : "Reconnecting to fleet data…"}
+            ? "Watching portfolio data for anomalies"
+            : "Reconnecting to portfolio data…"}
         </span>
       </div>
 
       <ul role="log" aria-live="polite" className="flex flex-col gap-2">
         {findings.length === 0 && (
-          <li className="text-sm text-zinc-500 dark:text-zinc-400">
-            No findings yet — the monitor is watching fleet data in the
+          <li className="text-sm text-stone-500 dark:text-stone-400">
+            No findings yet — the monitor is watching portfolio data in the
             background.
           </li>
         )}
         {findings.map((finding) => (
           <li
             key={finding.id}
-            className="flex flex-col gap-2 rounded-md border border-zinc-100 p-3 dark:border-zinc-800"
+            className="flex flex-col gap-2 rounded-sm border border-stone-100 p-3 dark:border-stone-800"
           >
             <div className="flex items-start justify-between gap-2">
-              <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+              <span className="text-sm font-medium text-ink dark:text-cream">
                 {finding.summary}
               </span>
               <span
@@ -58,10 +58,10 @@ export function MonitorPanel() {
                 {SEVERITY_LABEL[finding.severity]}
               </span>
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-stone-500 dark:text-stone-400">
               {finding.detail}
             </p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-300">
+            <p className="text-xs text-stone-600 dark:text-stone-300">
               {finding.confidence}% confidence — suggested:{" "}
               {finding.suggestedAction}
             </p>
@@ -71,7 +71,7 @@ export function MonitorPanel() {
                   type="button"
                   onClick={() => reviewFinding(finding.id, "accepted")}
                   aria-label={`Accept recommendation: ${finding.suggestedAction}`}
-                  className="rounded-md bg-teal-700 px-3 py-1 text-xs font-medium text-white hover:bg-teal-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-900"
+                  className="rounded-sm bg-ink px-3 py-1 text-xs font-medium text-cream hover:opacity-90 dark:bg-cream dark:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
                 >
                   Accept
                 </button>
@@ -79,13 +79,13 @@ export function MonitorPanel() {
                   type="button"
                   onClick={() => reviewFinding(finding.id, "dismissed")}
                   aria-label={`Dismiss finding: ${finding.summary}`}
-                  className="rounded-md border border-zinc-300 px-3 py-1 text-xs font-medium text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:border-zinc-700 dark:text-zinc-300 dark:focus-visible:ring-offset-zinc-900"
+                  className="rounded-sm border border-stone-300 px-3 py-1 text-xs font-medium text-stone-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-stone-700 dark:text-stone-300 dark:focus-visible:ring-offset-stone-900"
                 >
                   Dismiss
                 </button>
               </div>
             ) : (
-              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              <p className="text-xs font-medium text-stone-500 dark:text-stone-400">
                 {finding.reviewStatus === "accepted"
                   ? "Recommendation accepted"
                   : "Finding dismissed"}

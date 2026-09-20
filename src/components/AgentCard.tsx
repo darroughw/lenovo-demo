@@ -18,12 +18,12 @@ const STATUS_LABEL: Record<AgentStatus["status"], string> = {
 };
 
 const STATUS_BADGE_CLASS: Record<AgentStatus["status"], string> = {
-  idle: "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300",
-  running: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
+  idle: "bg-stone-200 text-stone-700 dark:bg-stone-800 dark:text-stone-300",
+  running: "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
   error: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300",
   "needs-review":
     "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
-  queued: "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400",
+  queued: "bg-stone-100 text-stone-600 dark:bg-stone-900 dark:text-stone-400",
 };
 
 export function AgentCard({ agent, selected, onSelect }: AgentCardProps) {
@@ -42,14 +42,14 @@ export function AgentCard({ agent, selected, onSelect }: AgentCardProps) {
       aria-pressed={selected}
       aria-label={`${agent.name}, status: ${statusLabel}${isRunning ? `, ${liveProgress}% complete` : ""}`}
       onClick={() => onSelect(agent.id)}
-      className={`flex w-full flex-col gap-2 rounded-lg border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black ${
+      className={`flex w-full flex-col gap-2 rounded-sm border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ink ${
         selected
-          ? "border-teal-600 bg-teal-50 dark:bg-teal-950/40"
-          : "border-zinc-200 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+          ? "border-violet-600 bg-violet-50 dark:bg-violet-950/40"
+          : "border-stone-200 bg-white hover:border-stone-300 dark:border-stone-800 dark:bg-stone-900 dark:hover:border-stone-700"
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="font-medium text-zinc-900 dark:text-zinc-50">
+        <span className="font-medium text-ink dark:text-cream">
           {agent.name}
         </span>
         <span
@@ -58,22 +58,22 @@ export function AgentCard({ agent, selected, onSelect }: AgentCardProps) {
           {statusLabel}
         </span>
       </div>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="text-sm text-stone-500 dark:text-stone-400">
         {agent.description}
       </p>
       {isRunning && (
         <div
           aria-hidden="true"
-          className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800"
+          className="h-1.5 w-full overflow-hidden rounded-full bg-stone-200 dark:bg-stone-800"
         >
           <div
-            className="h-full rounded-full bg-teal-600 transition-all"
+            className="h-full rounded-full bg-violet-600 transition-all"
             style={{ width: `${liveProgress}%` }}
           />
         </div>
       )}
       {agentStatus.status === "queued" && (
-        <span className="text-xs text-zinc-500 dark:text-zinc-400">
+        <span className="text-xs text-stone-500 dark:text-stone-400">
           Position {agentStatus.position} in queue
         </span>
       )}

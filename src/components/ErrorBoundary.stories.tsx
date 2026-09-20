@@ -4,7 +4,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 function Safe() {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+    <div className="rounded-sm border border-stone-200 bg-white p-4 text-sm text-stone-700 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300">
       Renders normally.
     </div>
   );

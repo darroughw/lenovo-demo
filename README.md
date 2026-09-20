@@ -1,8 +1,8 @@
-# Fleet Ops Agent Console
+# Parcel Intelligence Console
 
-An AI agent dashboard for an IT fleet-management use case: active agents with live status,
+An AI agent dashboard for a property-data-and-risk use case: active agents with live status,
 token-by-token streaming output, confidence signals with historical trend, an always-on
-anomaly monitor with human-reviewed recommendations, and a task queue.
+portfolio monitor with human-reviewed recommendations, and a task queue.
 
 Built by [Darrough West](https://darroughw.github.io) as a portfolio piece exploring
 AI-native UX patterns — streaming, confidence signaling, human-in-the-loop review, and
@@ -16,12 +16,12 @@ accessible custom components — on a modern Next.js/React stack.
   controls and an accessible `aria-live` log
 - **Confidence signals** — a point-in-time bar plus a Recharts sparkline showing confidence
   trend across recent runs
-- **Fleet Monitor** — an always-on agent (not task-scoped) that streams anomaly findings via
-  SSE and requires an explicit Accept or Dismiss per finding; it never acts on its own
+- **Portfolio Monitor** — an always-on agent (not task-scoped) that streams anomaly findings
+  via SSE and requires an explicit Accept or Dismiss per finding; it never acts on its own
 - **Agent detail panel** — a native `<dialog>` showing an agent's full task history
 - **Task queue** — form-driven task submission with `useReducer`-based state
 - **Keyboard shortcuts** — Cmd/Ctrl+K focuses the task input, Escape cancels streaming
-- **Dark mode** — every component follows `prefers-color-scheme`
+- **Dark mode** — manual toggle in the header, top-right; light is always the default
 - **Accessibility-first** — ARIA roles/labels, visible focus states, and AA-contrast color
   choices throughout; see the Storybook a11y addon for live checks per component
 

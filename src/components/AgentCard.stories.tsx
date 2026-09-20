@@ -21,9 +21,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const baseAgent = {
-  id: "agent-fleet-health",
-  name: "Fleet Health Monitor",
-  description: "Watches device telemetry across the managed fleet for anomalies.",
+  id: "agent-avm-valuation",
+  name: "AVM Valuation Agent",
+  description: "Refreshes automated valuation model estimates as new comps and listing data arrive.",
 };
 
 export const Idle: Story = {
@@ -47,8 +47,8 @@ export const Queued: Story = {
   args: {
     agent: {
       ...baseAgent,
-      name: "Provisioning Assistant",
-      description: "Drafts provisioning plans for newly enrolled devices.",
+      name: "Title Verification Agent",
+      description: "Drafts title chain verification plans for newly listed parcels.",
       agentStatus: { status: "queued", position: 2 },
     } satisfies Agent,
     selected: false,
@@ -59,8 +59,8 @@ export const NeedsReview: Story = {
   args: {
     agent: {
       ...baseAgent,
-      name: "Warranty Reconciliation",
-      description: "Cross-references device serials against warranty and service records.",
+      name: "Climate Risk Assessor",
+      description: "Cross-references parcels against flood, wildfire, and wind peril models.",
       agentStatus: { status: "needs-review", confidence: 58, taskId: "task-2" },
     } satisfies Agent,
     selected: false,
@@ -71,11 +71,11 @@ export const ErrorState: Story = {
   args: {
     agent: {
       ...baseAgent,
-      name: "Support Ticket Triage",
-      description: "Classifies and routes inbound support tickets by severity.",
+      name: "Underwriting Exception Triage",
+      description: "Classifies and routes mortgage underwriting exceptions by severity.",
       agentStatus: {
         status: "error",
-        message: "Upstream ticketing API timed out.",
+        message: "Upstream underwriting API timed out.",
         taskId: "task-4",
       },
     } satisfies Agent,

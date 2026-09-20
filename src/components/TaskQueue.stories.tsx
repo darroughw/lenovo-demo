@@ -23,31 +23,31 @@ type Story = StoryObj<typeof meta>;
 const ALL_STATUSES: Task[] = [
   {
     id: "task-1",
-    prompt: "Scan fleet for battery health below 80%",
+    prompt: "Refresh AVM estimates for parcels with valuations older than 90 days",
     taskStatus: { status: "queued", position: 1 },
     createdAt: Date.now(),
   },
   {
     id: "task-2",
-    prompt: "Reconcile warranty status for Region 4 devices",
+    prompt: "Assess flood risk exposure for Region 4 coastal parcels",
     taskStatus: { status: "running", progress: 62 },
     createdAt: Date.now(),
   },
   {
     id: "task-3",
-    prompt: "Summarize weekly device enrollment report",
+    prompt: "Summarize weekly new-listing intake report",
     taskStatus: { status: "completed" },
     createdAt: Date.now(),
   },
   {
     id: "task-4",
-    prompt: "Classify inbound support ticket batch",
-    taskStatus: { status: "error", message: "Upstream ticketing API timed out." },
+    prompt: "Classify inbound underwriting exception batch",
+    taskStatus: { status: "error", message: "Upstream underwriting API timed out." },
     createdAt: Date.now(),
   },
   {
     id: "task-5",
-    prompt: "Draft provisioning plan for Region 2 devices",
+    prompt: "Draft title verification plan for Region 2 parcels",
     taskStatus: { status: "needs-review", confidence: 58 },
     createdAt: Date.now(),
   },

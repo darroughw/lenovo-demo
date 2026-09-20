@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<
       return (
         <div
           role="alert"
-          className="flex flex-col gap-1 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/40"
+          className="flex flex-col gap-1 rounded-sm border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/40"
         >
           <p className="text-sm font-medium text-red-700 dark:text-red-300">
             {this.props.fallbackLabel} failed to render.

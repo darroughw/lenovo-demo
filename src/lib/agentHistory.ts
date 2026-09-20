@@ -3,85 +3,85 @@ import type { AgentHistoryEntry } from "@/src/types/agent";
 const HOUR_MS = 1000 * 60 * 60;
 
 const AGENT_HISTORY: Record<string, AgentHistoryEntry[]> = {
-  "agent-fleet-health": [
+  "agent-avm-valuation": [
     {
-      id: "hist-fleet-1",
-      prompt: "Scan fleet for battery health below 80%",
+      id: "hist-avm-1",
+      prompt: "Refresh AVM estimates for parcels with valuations older than 90 days",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 2,
     },
     {
-      id: "hist-fleet-2",
-      prompt: "Check firmware compliance across Region 3",
+      id: "hist-avm-2",
+      prompt: "Recalculate comps for Region 3 condo listings",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 9,
     },
     {
-      id: "hist-fleet-3",
-      prompt: "Flag devices with repeated thermal throttling",
+      id: "hist-avm-3",
+      prompt: "Flag parcels with repeated appraisal variance",
       status: "needs-review",
       confidence: 61,
       completedAt: Date.now() - HOUR_MS * 27,
     },
   ],
-  "agent-warranty": [
+  "agent-climate-risk": [
     {
-      id: "hist-warranty-1",
-      prompt: "Reconcile warranty status for Region 4 devices",
+      id: "hist-climate-1",
+      prompt: "Assess flood risk exposure for Region 4 coastal parcels",
       status: "needs-review",
       confidence: 58,
       completedAt: Date.now() - HOUR_MS * 0.2,
     },
     {
-      id: "hist-warranty-2",
-      prompt: "Cross-check serials against OEM warranty API",
+      id: "hist-climate-2",
+      prompt: "Cross-check elevation survey data against FEMA flood maps",
       status: "needs-review",
       confidence: 65,
       completedAt: Date.now() - HOUR_MS * 6,
     },
     {
-      id: "hist-warranty-3",
-      prompt: "Reconcile warranty status for Region 1 devices",
+      id: "hist-climate-3",
+      prompt: "Assess wildfire risk exposure for Region 1 parcels",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 30,
     },
     {
-      id: "hist-warranty-4",
-      prompt: "Reconcile warranty status for Region 3 devices",
+      id: "hist-climate-4",
+      prompt: "Assess flood risk exposure for Region 3 parcels",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 54,
     },
   ],
-  "agent-provisioning": [
+  "agent-title-verification": [
     {
-      id: "hist-provisioning-1",
-      prompt: "Draft provisioning plan for 8 newly enrolled devices",
+      id: "hist-title-1",
+      prompt: "Draft title chain verification plan for 8 newly listed parcels",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 4,
     },
     {
-      id: "hist-provisioning-2",
-      prompt: "Apply standard security baseline to Region 2 batch",
+      id: "hist-title-2",
+      prompt: "Apply standard lien and easement checks to Region 2 batch",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 20,
     },
   ],
-  "agent-support": [
+  "agent-underwriting-triage": [
     {
-      id: "hist-support-1",
-      prompt: "Classify inbound ticket batch",
+      id: "hist-underwriting-1",
+      prompt: "Classify inbound underwriting exception batch",
       status: "error",
       completedAt: Date.now() - HOUR_MS * 1,
     },
     {
-      id: "hist-support-2",
-      prompt: "Route Region 2 login-issue tickets to on-call",
+      id: "hist-underwriting-2",
+      prompt: "Route Region 2 income-verification exceptions to on-call",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 5,
     },
     {
-      id: "hist-support-3",
-      prompt: "Summarize weekly ticket volume by severity",
+      id: "hist-underwriting-3",
+      prompt: "Summarize weekly exception volume by severity",
       status: "completed",
       completedAt: Date.now() - HOUR_MS * 22,
     },

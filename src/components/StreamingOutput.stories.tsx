@@ -16,13 +16,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Idle: Story = {
   args: {
-    agentId: "agent-fleet-health",
+    agentId: "agent-avm-valuation",
   },
 };
 
 export const AutoStart: Story = {
   args: {
-    agentId: "agent-warranty",
+    agentId: "agent-climate-risk",
     autoStart: true,
   },
 };

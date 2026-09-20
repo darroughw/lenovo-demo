@@ -9,6 +9,7 @@ import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { MonitorPanel } from "@/src/components/MonitorPanel";
 import { StreamingOutput, type StreamingOutputHandle } from "@/src/components/StreamingOutput";
 import { TaskQueue } from "@/src/components/TaskQueue";
+import { ThemeToggle } from "@/src/components/ThemeToggle";
 import { getAgentHistory } from "@/src/lib/agentHistory";
 import { getConfidenceHistory } from "@/src/lib/confidenceHistory";
 import { useAnimatedNumber } from "@/src/hooks/useAnimatedNumber";
@@ -17,32 +18,33 @@ import type { Agent, Task } from "@/src/types/agent";
 
 const AGENTS: Agent[] = [
   {
-    id: "agent-fleet-health",
-    name: "Fleet Health Monitor",
+    id: "agent-avm-valuation",
+    name: "AVM Valuation Agent",
     description:
-      "Watches device telemetry across the managed fleet for anomalies.",
+      "Refreshes automated valuation model estimates as new comps and listing data arrive.",
     agentStatus: { status: "running", taskId: "task-1", progress: 62 },
   },
   {
-    id: "agent-warranty",
-    name: "Warranty Reconciliation",
+    id: "agent-climate-risk",
+    name: "Climate Risk Assessor",
     description:
-      "Cross-references device serials against warranty and service records.",
+      "Cross-references parcels against flood, wildfire, and wind peril models.",
     agentStatus: { status: "needs-review", confidence: 58, taskId: "task-2" },
   },
   {
-    id: "agent-provisioning",
-    name: "Provisioning Assistant",
-    description: "Drafts provisioning plans for newly enrolled devices.",
+    id: "agent-title-verification",
+    name: "Title Verification Agent",
+    description: "Drafts title chain verification plans for newly listed parcels.",
     agentStatus: { status: "queued", position: 2 },
   },
   {
-    id: "agent-support",
-    name: "Support Ticket Triage",
-    description: "Classifies and routes inbound support tickets by severity.",
+    id: "agent-underwriting-triage",
+    name: "Underwriting Exception Triage",
+    description:
+      "Classifies and routes mortgage underwriting exceptions by severity.",
     agentStatus: {
       status: "error",
-      message: "Upstream ticketing API timed out.",
+      message: "Upstream underwriting API timed out.",
       taskId: "task-4",
     },
   },
@@ -51,13 +53,13 @@ const AGENTS: Agent[] = [
 const INITIAL_TASKS: Task[] = [
   {
     id: "task-1",
-    prompt: "Scan fleet for battery health below 80%",
+    prompt: "Refresh AVM estimates for parcels with valuations older than 90 days",
     taskStatus: { status: "running", progress: 62 },
     createdAt: Date.now() - 1000 * 60 * 5,
   },
   {
     id: "task-2",
-    prompt: "Reconcile warranty status for Region 4 devices",
+    prompt: "Assess flood risk exposure for Region 4 coastal parcels",
     taskStatus: { status: "needs-review", confidence: 58 },
     createdAt: Date.now() - 1000 * 60 * 12,
   },
@@ -68,9 +70,9 @@ let taskIdCounter = INITIAL_TASKS.length;
 function MetricCard({ label, value }: { label: string; value: number }) {
   const displayValue = useAnimatedNumber(value);
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-      <p className="text-xs text-zinc-500 dark:text-zinc-400">{label}</p>
-      <p className="text-2xl font-semibold tabular-nums text-zinc-900 dark:text-zinc-50">
+    <div className="rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+      <p className="font-mono text-xs text-violet-700 dark:text-violet-300">{label}</p>
+      <p className="text-2xl font-semibold tabular-nums text-ink dark:text-cream">
         {displayValue}
       </p>
     </div>
@@ -139,13 +141,17 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-1 flex-col gap-6 bg-zinc-50 px-6 py-8 dark:bg-black sm:px-10">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-          Fleet Ops Agent Console
+    <main className="flex flex-1 flex-col gap-6 bg-cream px-6 py-8 dark:bg-ink sm:px-10">
+      <header className="relative flex flex-col items-center gap-3 pt-10 pb-2 text-center sm:pt-4">
+        <div className="absolute right-0 top-0">
+          <ThemeToggle />
+        </div>
+        <h1 className="text-4xl font-semibold text-ink dark:text-cream sm:text-5xl lg:text-6xl">
+          Parcel Intelligence Console
         </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Live view of active agents, task queue, and confidence signals.
+        <p className="max-w-2xl text-base text-stone-600 dark:text-stone-400 sm:text-lg">
+          Live view of active agents, task queue, and confidence signals across
+          the property portfolio.
         </p>
       </header>
 
@@ -158,7 +164,7 @@ export default function Home() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+          <h2 className="text-sm font-medium text-ink dark:text-cream">
             Agents
           </h2>
           <ErrorBoundary fallbackLabel="Agents panel">
@@ -181,13 +187,13 @@ export default function Home() {
             <ErrorBoundary fallbackLabel="Agent output panel">
               <>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                  <span className="text-xs text-stone-500 dark:text-stone-400">
                     Selected: {selectedAgent.name}
                   </span>
                   <button
                     type="button"
                     onClick={() => setIsHistoryOpen(true)}
-                    className="rounded text-xs font-medium text-teal-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 dark:text-teal-400"
+                    className="rounded text-xs font-medium text-violet-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-400"
                   >
                     View full history
                   </button>
@@ -221,10 +227,10 @@ export default function Home() {
       />
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
-          Fleet Monitor
+        <h2 className="text-sm font-medium text-ink dark:text-cream">
+          Portfolio Monitor
         </h2>
-        <ErrorBoundary fallbackLabel="Fleet monitor">
+        <ErrorBoundary fallbackLabel="Portfolio monitor">
           <MonitorPanel />
         </ErrorBoundary>
       </section>

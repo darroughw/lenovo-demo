@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
+/* Dark mode is a manual toggle (ThemeToggle adds/removes `.dark` on <html>),
+   not the OS `prefers-color-scheme` — light is always the default on first
+   visit regardless of system setting. This line is what makes every
+   existing `dark:` utility class across the app respond to that class
+   instead of the media query, with zero changes needed in any component. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7efe2;
+  --foreground: #1e1405;
+}
+
+:root.dark {
+  --background: #1e1405;
+  --foreground: #f7efe2;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-display);
+  --font-mono: var(--font-label-mono);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Cream/ink duo measured directly from https://www.cotality.com/our-data
+     (DOM computed styles + pixel sampling, not eyeballed) — the page
+     background and primary text color on their real site. Used as flat
+     single-value tokens (not a full 50-950 scale) layered on top of
+     Tailwind's built-in `stone` for everything else, since matching every
+     neutral step wasn't necessary to read as "the same palette." */
+  --color-cream: #f7efe2;
+  --color-ink: #1e1405;
+
+  /* Violet accent — anchored at #a805fb, also measured from the same page
+     (used there for eyebrow labels/links, not large button fills — their
+     real CTAs are solid ink). Intermediate shades interpolated and
+     contrast-checked at the shades actually used in this app (see
+     CLAUDE.md): 700 for small text-on-cream (~6.95:1), 500 for
+     borders/fills/focus rings (non-text, well over 3:1), 300 for
+     text-on-dark-ink (~8.4:1). Kept genuinely distinct from the app's
+     existing `amber` needs-review/warning semantic. */
+  --color-violet-50: #faf5ff;
+  --color-violet-100: #f3e0ff;
+  --color-violet-200: #e4c2ff;
+  --color-violet-300: #d199ff;
+  --color-violet-400: #bb66ff;
+  --color-violet-500: #a805fb;
+  --color-violet-600: #9203db;
+  --color-violet-700: #7a05c4;
+  --color-violet-800: #5c0492;
+  --color-violet-900: #400368;
+  --color-violet-950: #2a0347;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }

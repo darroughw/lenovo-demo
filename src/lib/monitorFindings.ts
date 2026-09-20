@@ -10,52 +10,52 @@ export interface FindingTemplate {
 
 const FINDING_POOL: FindingTemplate[] = [
   {
-    summary: "14 devices show accelerating battery degradation",
+    summary: "212 parcels reclassified into a higher flood risk tier",
     detail:
-      "Battery health across Region 2 laptops is dropping 6% faster than the fleet average over the last 7 days.",
+      "An updated FEMA flood map revision moved 212 Region 2 parcels from moderate to high risk, above the typical monthly reclassification rate.",
     severity: "warning",
     confidence: 82,
-    suggestedAction: "Queue a battery health scan for Region 2 devices",
+    suggestedAction: "Queue a climate risk re-assessment for Region 2 parcels",
   },
   {
-    summary: "Warranty API latency up 3x in the last hour",
+    summary: "Underwriting API latency up 3x in the last hour",
     detail:
-      "p95 response time for the warranty reconciliation upstream rose from 400ms to 1.3s starting 11:05 UTC.",
+      "p95 response time for the underwriting exception upstream rose from 400ms to 1.3s starting 11:05 UTC.",
     severity: "critical",
     confidence: 91,
-    suggestedAction: "Page the integrations on-call and pause warranty sync",
+    suggestedAction: "Page the integrations on-call and pause exception sync",
   },
   {
-    summary: "Support ticket volume spiking in Region 2",
+    summary: "Appraisal variance spike detected in Region 2",
     detail:
-      "Inbound tickets are running 2.4x above the trailing 7-day average, concentrated in login-related issues.",
+      "AVM estimates are diverging from final appraisals by 2.4x the trailing 7-day average, concentrated in new-construction parcels.",
     severity: "warning",
     confidence: 74,
-    suggestedAction: "Escalate ticket triage priority for Region 2",
+    suggestedAction: "Escalate AVM review priority for Region 2 parcels",
   },
   {
-    summary: "New device enrollment batch detected",
+    summary: "New MLS listing batch detected",
     detail:
-      "212 devices enrolled overnight via bulk provisioning, above the typical batch size of ~40.",
+      "212 new listings synced overnight from the Region 3 MLS feed, above the typical batch size of ~40.",
     severity: "info",
     confidence: 96,
-    suggestedAction: "Review the provisioning plan before it executes",
+    suggestedAction: "Review the AVM refresh plan before it executes",
   },
   {
-    summary: "Firmware rollout failure rate above threshold",
+    summary: "AVM model version rollout failure rate above threshold",
     detail:
-      "6% of devices on the latest firmware build are failing to check in, versus a 1% baseline.",
+      "6% of parcels re-scored under the newest AVM model version are failing validation, versus a 1% baseline.",
     severity: "critical",
     confidence: 88,
-    suggestedAction: "Halt the firmware rollout and flag affected devices",
+    suggestedAction: "Halt the model rollout and flag affected parcels",
   },
   {
-    summary: "Idle license usage detected",
+    summary: "Idle MLS feed subscriptions detected",
     detail:
-      "38 seats have shown no activity in 60+ days, representing recoverable license spend.",
+      "38 regional MLS feed subscriptions have shown no query activity in 60+ days, representing recoverable data-licensing spend.",
     severity: "info",
     confidence: 69,
-    suggestedAction: "Draft a license reclamation recommendation for IT admin review",
+    suggestedAction: "Draft a subscription reclamation recommendation for analyst review",
   },
 ];
 

@@ -18,7 +18,7 @@ function colorClass(value: number): string {
 export function ConfidenceBar({ label, value }: ConfidenceBarProps) {
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="flex items-center justify-between font-mono text-xs text-stone-500 dark:text-stone-400">
         <span>{label}</span>
         <span>{value}%</span>
       </div>
@@ -28,7 +28,7 @@ export function ConfidenceBar({ label, value }: ConfidenceBarProps) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={`${label}: ${semanticLabel(value)}, ${value}%`}
-        className="h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800"
+        className="h-2 w-full overflow-hidden rounded-full bg-stone-200 dark:bg-stone-800"
       >
         <div
           className={`h-full rounded-full transition-all ${colorClass(value)}`}
