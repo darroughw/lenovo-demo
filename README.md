@@ -18,7 +18,9 @@ accessible custom components — on a modern Next.js/React stack.
   trend across recent runs
 - **Portfolio Monitor** — an always-on agent (not task-scoped) that streams anomaly findings
   via SSE and requires an explicit Accept or Dismiss per finding; it never acts on its own
-- **Agent detail panel** — a native `<dialog>` showing an agent's full task history
+- **Agent detail panel** — a native `<dialog>` with an agent's confidence trend, full task
+  history with per-task thumbs-up/down feedback, and a Pause/Resume action — the answer to
+  "what do you do after deciding to trust or distrust an agent"
 - **Task queue** — form-driven task submission with `useReducer`-based state
 - **Keyboard shortcuts** — Cmd/Ctrl+K focuses the task input, Escape cancels streaming
 - **Dark mode** — manual toggle in the header, top-right; light is always the default

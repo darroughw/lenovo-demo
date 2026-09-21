@@ -14,6 +14,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     onSelect: fn(),
+    onResume: fn(),
   },
 } satisfies Meta<typeof AgentCard>;
 
@@ -90,5 +91,20 @@ export const Selected: Story = {
       agentStatus: { status: "running", taskId: "task-1", progress: 62 },
     } satisfies Agent,
     selected: true,
+  },
+};
+
+export const Paused: Story = {
+  args: {
+    agent: {
+      ...baseAgent,
+      name: "Climate Risk Assessor",
+      description: "Cross-references parcels against flood, wildfire, and wind peril models.",
+      agentStatus: {
+        status: "paused",
+        previousStatus: { status: "needs-review", confidence: 58, taskId: "task-2" },
+      },
+    } satisfies Agent,
+    selected: false,
   },
 };

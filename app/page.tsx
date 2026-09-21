@@ -12,11 +12,13 @@ import { TaskQueue } from "@/src/components/TaskQueue";
 import { ThemeToggle } from "@/src/components/ThemeToggle";
 import { getAgentHistory } from "@/src/lib/agentHistory";
 import { getConfidenceHistory } from "@/src/lib/confidenceHistory";
+import { useAgentHistories } from "@/src/hooks/useAgentHistories";
+import { useAgents } from "@/src/hooks/useAgents";
 import { useAnimatedNumber } from "@/src/hooks/useAnimatedNumber";
 import { useTaskQueue } from "@/src/hooks/useTaskQueue";
 import type { Agent, Task } from "@/src/types/agent";
 
-const AGENTS: Agent[] = [
+const INITIAL_AGENTS: Agent[] = [
   {
     id: "agent-avm-valuation",
     name: "AVM Valuation Agent",
@@ -65,12 +67,17 @@ const INITIAL_TASKS: Task[] = [
   },
 ];
 
+const INITIAL_HISTORIES: Record<string, ReturnType<typeof getAgentHistory>> =
+  Object.fromEntries(
+    INITIAL_AGENTS.map((agent) => [agent.id, getAgentHistory(agent.id)])
+  );
+
 let taskIdCounter = INITIAL_TASKS.length;
 
 function MetricCard({ label, value }: { label: string; value: number }) {
   const displayValue = useAnimatedNumber(value);
   return (
-    <div className="rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <div className="rounded-sm border border-ink bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <p className="font-mono text-xs text-violet-700 dark:text-violet-300">{label}</p>
       <p className="text-2xl font-semibold tabular-nums text-ink dark:text-cream">
         {displayValue}
@@ -80,16 +87,18 @@ function MetricCard({ label, value }: { label: string; value: number }) {
 }
 
 export default function Home() {
-  const [selectedAgentId, setSelectedAgentId] = useState(AGENTS[0].id);
+  const [selectedAgentId, setSelectedAgentId] = useState(INITIAL_AGENTS[0].id);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const { tasks, addTask } = useTaskQueue(INITIAL_TASKS);
+  const { agents, pauseAgent, resumeAgent } = useAgents(INITIAL_AGENTS);
+  const { histories, setFeedback } = useAgentHistories(INITIAL_HISTORIES);
 
   const promptInputRef = useRef<HTMLInputElement>(null);
   const streamingRef = useRef<StreamingOutputHandle>(null);
 
   const selectedAgent = useMemo(
-    () => AGENTS.find((agent) => agent.id === selectedAgentId),
-    [selectedAgentId]
+    () => agents.find((agent) => agent.id === selectedAgentId),
+    [agents, selectedAgentId]
   );
 
   // Cmd/Ctrl+K focuses the task prompt input; Escape cancels streaming.
@@ -118,17 +127,17 @@ export default function Home() {
   }, [isHistoryOpen]);
 
   const metrics = useMemo(() => {
-    const running = AGENTS.filter(
+    const running = agents.filter(
       (agent) => agent.agentStatus.status === "running"
     ).length;
-    const needsReview = AGENTS.filter(
+    const needsReview = agents.filter(
       (agent) => agent.agentStatus.status === "needs-review"
     ).length;
     const queued = tasks.filter(
       (task) => task.taskStatus.status === "queued"
     ).length;
-    return { running, needsReview, queued, total: AGENTS.length };
-  }, [tasks]);
+    return { running, needsReview, queued, total: agents.length };
+  }, [agents, tasks]);
 
   function handleAddTask(prompt: string) {
     taskIdCounter += 1;
@@ -169,12 +178,13 @@ export default function Home() {
           </h2>
           <ErrorBoundary fallbackLabel="Agents panel">
             <div className="flex flex-col gap-3">
-              {AGENTS.map((agent) => (
+              {agents.map((agent) => (
                 <AgentCard
                   key={agent.id}
                   agent={agent}
                   selected={agent.id === selectedAgentId}
                   onSelect={setSelectedAgentId}
+                  onResume={resumeAgent}
                 />
               ))}
             </div>
@@ -222,8 +232,15 @@ export default function Home() {
 
       <AgentDetailPanel
         agent={isHistoryOpen ? (selectedAgent ?? null) : null}
-        history={selectedAgent ? getAgentHistory(selectedAgent.id) : []}
+        history={selectedAgent ? (histories[selectedAgent.id] ?? []) : []}
+        confidenceHistory={
+          selectedAgent ? getConfidenceHistory(selectedAgent.id) : []
+        }
+        isPaused={selectedAgent?.agentStatus.status === "paused"}
         onClose={() => setIsHistoryOpen(false)}
+        onPause={pauseAgent}
+        onResume={resumeAgent}
+        onFeedback={setFeedback}
       />
 
       <section className="flex flex-col gap-3">

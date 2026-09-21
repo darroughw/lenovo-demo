@@ -19,7 +19,7 @@ export function MonitorPanel() {
   const { findings, isWatching, reviewFinding } = useMonitorFeed();
 
   return (
-    <div className="flex flex-col gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <div className="flex flex-col gap-3 rounded-sm border border-ink bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex items-center gap-2">
         <span
           aria-hidden="true"
@@ -46,7 +46,7 @@ export function MonitorPanel() {
         {findings.map((finding) => (
           <li
             key={finding.id}
-            className="flex flex-col gap-2 rounded-sm border border-stone-100 p-3 dark:border-stone-800"
+            className="flex flex-col gap-2 rounded-sm border border-ink p-3 dark:border-stone-800"
           >
             <div className="flex items-start justify-between gap-2">
               <span className="text-sm font-medium text-ink dark:text-cream">

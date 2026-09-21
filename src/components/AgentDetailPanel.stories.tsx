@@ -20,6 +20,9 @@ const meta = {
   tags: ["autodocs"],
   args: {
     onClose: fn(),
+    onPause: fn(),
+    onResume: fn(),
+    onFeedback: fn(),
   },
 } satisfies Meta<typeof AgentDetailPanel>;
 
@@ -32,6 +35,8 @@ const agent: Agent = {
   description: "Cross-references parcels against flood, wildfire, and wind peril models.",
   agentStatus: { status: "needs-review", confidence: 58, taskId: "task-2" },
 };
+
+const confidenceHistory = [88, 79, 74, 65, 58];
 
 const history: AgentHistoryEntry[] = [
   {
@@ -47,12 +52,14 @@ const history: AgentHistoryEntry[] = [
     status: "needs-review",
     confidence: 65,
     completedAt: Date.now() - 1000 * 60 * 60 * 6,
+    feedback: "flagged",
   },
   {
     id: "hist-3",
     prompt: "Assess wildfire risk exposure for Region 1 parcels",
     status: "completed",
     completedAt: Date.now() - 1000 * 60 * 60 * 30,
+    feedback: "affirmed",
   },
 ];
 
@@ -60,6 +67,8 @@ export const WithHistory: Story = {
   args: {
     agent,
     history,
+    confidenceHistory,
+    isPaused: false,
   },
 };
 
@@ -67,5 +76,16 @@ export const EmptyHistory: Story = {
   args: {
     agent,
     history: [],
+    confidenceHistory,
+    isPaused: false,
+  },
+};
+
+export const Paused: Story = {
+  args: {
+    agent,
+    history,
+    confidenceHistory,
+    isPaused: true,
   },
 };

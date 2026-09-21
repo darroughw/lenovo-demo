@@ -23,7 +23,7 @@ export function StreamingOutput({ agentId, autoStart, ref }: StreamingOutputProp
   useImperativeHandle(ref, () => ({ stop }), [stop]);
 
   return (
-    <div className="flex flex-col gap-3 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <div className="flex flex-col gap-3 rounded-sm border border-ink bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium text-ink dark:text-cream">
           Agent Output

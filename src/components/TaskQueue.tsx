@@ -41,7 +41,7 @@ export function TaskQueue({ tasks, onAddTask, ref }: TaskQueueProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-sm border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <div className="flex flex-col gap-4 rounded-sm border border-ink bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <h3 className="text-sm font-medium text-ink dark:text-cream">
         Task Queue
       </h3>
@@ -84,7 +84,7 @@ export function TaskQueue({ tasks, onAddTask, ref }: TaskQueueProps) {
         {tasks.map((task) => (
           <li
             key={task.id}
-            className="flex items-center justify-between rounded-sm border border-stone-100 px-3 py-2 dark:border-stone-800"
+            className="flex items-center justify-between rounded-sm border border-ink px-3 py-2 dark:border-stone-800"
           >
             <span className="text-sm text-stone-700 dark:text-stone-300">
               {task.prompt}

@@ -3,7 +3,8 @@ export type AgentStatus =
   | { status: "running"; taskId: string; progress: number }
   | { status: "error"; message: string; taskId: string }
   | { status: "needs-review"; confidence: number; taskId: string }
-  | { status: "queued"; position: number };
+  | { status: "queued"; position: number }
+  | { status: "paused"; previousStatus: AgentStatus };
 
 export type TaskStatus =
   | { status: "queued"; position: number }
@@ -47,10 +48,13 @@ export interface Finding {
 
 export type AgentHistoryStatus = "completed" | "error" | "needs-review";
 
+export type AgentHistoryFeedback = "affirmed" | "flagged";
+
 export interface AgentHistoryEntry {
   id: string;
   prompt: string;
   status: AgentHistoryStatus;
   confidence?: number;
   completedAt: number;
+  feedback?: AgentHistoryFeedback;
 }
