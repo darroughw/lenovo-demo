@@ -41,6 +41,45 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Usage
+
+**Agents panel**
+- Four agents, each in one of six states: idle, running, queued, needs-review, error, or paused
+- Click a card to select it — Agent Output, Confidence, and Task Queue update to that agent
+- Running agents show a live progress bar polled from the server
+
+**Agent Output (streaming)**
+- **Start** opens a real SSE connection and streams the response token-by-token
+- **Stop** cancels mid-flight; **Reset** clears the output
+- Also cancelable with **Escape** from anywhere on the page
+
+**Confidence signals**
+- When the selected agent is "needs-review," a **Confidence** bar (point-in-time) and a
+  **Confidence trend** sparkline (last 5 runs) appear under the streaming output
+
+**Task Queue**
+- Type a task and click **Queue** (or press Enter) to add it to the list
+- **Cmd/Ctrl+K** jumps focus to the input from anywhere on the page
+
+**Agent detail panel** — click "View full history" next to the selected agent's name
+- Shows the confidence trend again plus the agent's full task history
+- **Pause this agent** / **Resume agent** freezes or restores its state (a running task keeps
+  its progress, a queued one keeps its position) — also resumable directly from the card
+- Thumbs-up/down on each history entry affirms or flags that specific past result
+- Close with **✕**, **Escape**, or by clicking outside the dialog
+
+**Portfolio Monitor** (bottom of the page)
+- Always-on, no start button — streams anomaly findings in the background every 6-14 seconds
+- **Accept** or **Dismiss** each finding; it never acts on its own
+
+**Dark mode**
+- Toggle (sun/moon icon) in the header, top-right — light is the default regardless of your
+  OS setting, and your choice persists across reloads
+
+**Keyboard shortcuts**
+- **Cmd/Ctrl+K** — focus the task input
+- **Escape** — stop an active stream, or close the history dialog if it's open
+
 ## Other scripts
 
 ```bash
