@@ -6,6 +6,7 @@ import { AgentDetailPanel } from "@/src/components/AgentDetailPanel";
 import { ConfidenceBar } from "@/src/components/ConfidenceBar";
 import { ConfidenceTrend } from "@/src/components/ConfidenceTrend";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
+import { HelpDialog } from "@/src/components/HelpDialog";
 import { MonitorPanel } from "@/src/components/MonitorPanel";
 import { StreamingOutput, type StreamingOutputHandle } from "@/src/components/StreamingOutput";
 import { TaskQueue } from "@/src/components/TaskQueue";
@@ -89,6 +90,7 @@ function MetricCard({ label, value }: { label: string; value: number }) {
 export default function Home() {
   const [selectedAgentId, setSelectedAgentId] = useState(INITIAL_AGENTS[0].id);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const { tasks, addTask } = useTaskQueue(INITIAL_TASKS);
   const { agents, pauseAgent, resumeAgent } = useAgents(INITIAL_AGENTS);
   const { histories, setFeedback } = useAgentHistories(INITIAL_HISTORIES);
@@ -102,29 +104,31 @@ export default function Home() {
   );
 
   // Cmd/Ctrl+K focuses the task prompt input; Escape cancels streaming.
-  // Both are skipped while the history dialog is open — it already owns
-  // Escape natively, and stealing focus out of an open modal breaks the
-  // dialog's focus trap.
+  // Both are skipped while a dialog (history or help) is open — each dialog
+  // already owns Escape natively, and stealing focus out of an open modal
+  // breaks its focus trap.
   useEffect(() => {
+    const isDialogOpen = isHistoryOpen || isHelpOpen;
+
     function handleKeyDown(event: KeyboardEvent) {
       const isFocusShortcut =
         (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
 
       if (isFocusShortcut) {
-        if (isHistoryOpen) return;
+        if (isDialogOpen) return;
         event.preventDefault();
         promptInputRef.current?.focus();
         return;
       }
 
-      if (event.key === "Escape" && !isHistoryOpen) {
+      if (event.key === "Escape" && !isDialogOpen) {
         streamingRef.current?.stop();
       }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isHistoryOpen]);
+  }, [isHistoryOpen, isHelpOpen]);
 
   const metrics = useMemo(() => {
     const running = agents.filter(
@@ -251,6 +255,33 @@ export default function Home() {
           <MonitorPanel />
         </ErrorBoundary>
       </section>
+
+      <footer className="flex items-center justify-end border-t border-stone-200 pt-4 dark:border-stone-800">
+        <button
+          type="button"
+          onClick={() => setIsHelpOpen(true)}
+          className="flex items-center gap-1.5 rounded-sm px-2 py-1 text-xs font-medium text-stone-600 hover:bg-stone-900/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-stone-400 dark:hover:bg-cream/10"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="9.25" />
+            <path d="M9.5 9.3a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.9-2.4 3.4" />
+            <path d="M12 17.3v.1" />
+          </svg>
+          Help
+        </button>
+      </footer>
+
+      <HelpDialog isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </main>
   );
 }
